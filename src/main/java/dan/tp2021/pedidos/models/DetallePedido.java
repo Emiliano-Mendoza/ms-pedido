@@ -1,12 +1,10 @@
 package dan.tp2021.pedidos.models;
 
-import java.util.List;
-
 public class DetallePedido {
 	private Integer id;
 	private Integer cantidad;
 	private Double precio;
-	private List<Producto> listaProducto;
+	private Producto producto;
 	
 	public Integer getId() {
 		return id;
@@ -26,10 +24,10 @@ public class DetallePedido {
 	public void setPrecio(Double precio) {
 		this.precio = precio;
 	}
-	public List<Producto> getListaProducto() {
-		return listaProducto;
+	public Producto getProducto() {
+		return producto;
 	}
-	public void setListaProducto(List<Producto> listaProducto) {
-		this.listaProducto = listaProducto;
+	public void setProducto(Producto listaProducto) {
+		this.producto = listaProducto;
 	}
 }

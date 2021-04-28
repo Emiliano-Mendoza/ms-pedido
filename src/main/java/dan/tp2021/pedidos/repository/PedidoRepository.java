@@ -1,10 +1,25 @@
 package dan.tp2021.pedidos.repository;
 
 import org.springframework.data.repository.CrudRepository;
-//import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Repository;
 
 import dan.tp2021.pedidos.models.Pedido;
+import frsf.isi.dan.*;
 
-public interface PedidoRepository extends CrudRepository<Pedido, Integer> {
+@Repository
+public class PedidoRepository extends InMemoryRepository<Pedido> {
+
+	@Override
+	public Integer getId(Pedido entity) {
+		// TODO Auto-generated method stub
+		return entity.getId();
+	}
+
+	@Override
+	public void setId(Pedido entity, Integer id) {
+		// TODO Auto-generated method stub
+		entity.setId(id);
+	}
+	
 
 }
