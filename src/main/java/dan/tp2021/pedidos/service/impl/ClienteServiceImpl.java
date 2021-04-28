@@ -1,8 +1,11 @@
 package dan.tp2021.pedidos.service.impl;
 
+import org.springframework.stereotype.Service;
+
 import dan.tp2021.pedidos.models.Obra;
 import dan.tp2021.pedidos.service.ClienteService;
 
+@Service
 public class ClienteServiceImpl implements ClienteService {
 
 	@Override

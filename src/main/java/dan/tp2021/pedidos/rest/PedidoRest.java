@@ -26,8 +26,8 @@ import dan.tp2021.pedidos.service.PedidoService;
 @RequestMapping("/api/pedidos")
 //@Api(value = "PedidosRest", description="")
 public class PedidoRest {
-	@Autowired
 	//se trata de la anotación que permite inyectar unas dependencias con otras dentro de Spring
+	@Autowired
 	PedidoService pedidoSrv;
 	
 	private static final List<Pedido> listaPedidos = new ArrayList<>();
@@ -89,10 +89,26 @@ public class PedidoRest {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Pedido> agregarPedido(@RequestBody Pedido nuevoPedido){
-		nuevoPedido.setId(ID_GEN);
-		listaPedidos.add(nuevoPedido);
-		return ResponseEntity.ok(nuevoPedido);
+	public ResponseEntity<String> agregarPedido(@RequestBody Pedido nuevoPedido){
+		if(nuevoPedido.getObra() == null) {
+			return ResponseEntity.badRequest().body("Debe tener una obra");
+		}
+		
+		if(nuevoPedido.getDetalle().isEmpty() || nuevoPedido.getDetalle() == null) {
+			return ResponseEntity.badRequest().body("Debe tener un detalle");
+		}
+		else {
+			Optional<DetallePedido> detallesVacios = nuevoPedido.getDetalle()
+														.stream()
+														.filter(det -> det.getCantidad() == null)
+														.findFirst();
+			if(detallesVacios.isEmpty()) {
+				return ResponseEntity.badRequest().body("Los detalles deben tener una cantidad y lista de productos");
+			}
+		}
+		
+		pedidoSrv.crearPedido(nuevoPedido);
+		return ResponseEntity.accepted().build();
 	}
 	
 	@PostMapping(path="/crearPedido")
