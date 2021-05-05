@@ -40,6 +40,9 @@ public class PedidoServiceImpl implements PedidoService{
 			EstadoPedido estadoPendiente = new EstadoPedido();
 			estadoPendiente.setEstado("Pendiente");
 			nuevoPedido.setEstado(estadoPendiente);
+			pedidoRepository.save(nuevoPedido);
+			
+			return nuevoPedido;
 		}
 		
 		Double montoPedido = nuevoPedido.getDetalle()
@@ -51,7 +54,7 @@ public class PedidoServiceImpl implements PedidoService{
 		Double nuevoSaldo = saldoCliente - montoPedido;
 		
 		if((nuevoSaldo < 0) && (clienteService.maximoSaldoNegativo(nuevoPedido.getObra()) >= nuevoSaldo)) {	
-			if(!validarSituacionCrediticiaBajoRiesgo(nuevoPedido)) {
+			if(tieneSituacionCrediticiaBajoRiesgo(nuevoPedido)) {
 				throw new RuntimeException("El pedido tiene saldo negativo mayor al descubierto y su situacion es de riesgo");
 			}
 			EstadoPedido estadoPendiente = new EstadoPedido();
@@ -67,8 +70,7 @@ public class PedidoServiceImpl implements PedidoService{
 			nuevoPedido.setEstado(estadoPendiente);
 			pedidoRepository.save(nuevoPedido);
 		}
-		
-				
+	
 		return nuevoPedido;
 	}
 	
@@ -77,9 +79,9 @@ public class PedidoServiceImpl implements PedidoService{
 		return materialService.stockDisponible(producto) >= cantidad;
 	}
 	
-	private boolean validarSituacionCrediticiaBajoRiesgo(Pedido pedido) {
+	private boolean tieneSituacionCrediticiaBajoRiesgo(Pedido pedido) {
 		int situacion = clienteService.situacionCrediticiaBCRA(pedido.getObra());
 		
-		return (situacion != 1 || situacion != 2);
+		return ((situacion == 1) || (situacion == 2));
 	}
 }

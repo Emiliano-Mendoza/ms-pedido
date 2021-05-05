@@ -114,14 +114,14 @@ public class PedidoRest {
 	@PostMapping(path="/crearPedido")
 	public ResponseEntity<String> crearPedido(@RequestBody Pedido unPedido){
 		if (unPedido.getObra() == null) {
-			return ResponseEntity.badRequest().body("Debe agregar una obra");
+			return ResponseEntity.badRequest().body("El pedido no tiene una obra asociada");
 		}
 		if(unPedido.getDetalle() == null || unPedido.getDetalle().isEmpty()) {
-			return ResponseEntity.badRequest().body("Debe agregar el detalle");
+			return ResponseEntity.badRequest().body("El pedido no tiene detalle asociado");
 		}
 		
 		pedidoSrv.crearPedido(unPedido);
-		return ResponseEntity.status(HttpStatus.CREATED).body("OK");
+		return ResponseEntity.status(HttpStatus.CREATED).body("OK Pedido creado");
 	}
 	
 	@PostMapping(path="{idPedido}/detalle")
