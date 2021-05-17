@@ -6,6 +6,8 @@ import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.stream.IntStream;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dan.pedido.domain.DetallePedido;
 import com.dan.pedido.domain.Pedido;
+import com.dan.pedido.service.PedidoService;
 
 
 import io.swagger.annotations.Api;
@@ -31,14 +34,25 @@ import io.swagger.annotations.ApiResponses;
 public class PedidoRest {
 	
 	private static final List<Pedido> listaPedidos = new ArrayList<>();
-    private static Integer ID_GEN = 1;
+    //private static Integer ID_GEN = 1;
+    
+    @Autowired
+    private PedidoService pedidoServ;
+    
 	
     @PostMapping
-    public ResponseEntity<Pedido> crear(@RequestBody Pedido nuevo){
-    	System.out.println(" crear pedido "+ nuevo);
-        nuevo.setId(ID_GEN++);
-        listaPedidos.add(nuevo);
-        return ResponseEntity.ok(nuevo);
+    public ResponseEntity<?> crear(@RequestBody Pedido nuevo){
+    	
+    	if(nuevo.getObra() == null ) {
+    		return ResponseEntity.badRequest().body(("Debe elegir una obra"));
+    	}
+    	if( nuevo.getDetalle() == null || nuevo.getDetalle().isEmpty()) {
+    		return ResponseEntity.badRequest().body(("Agregar item al pedido"));
+    	}
+    	
+    	this.pedidoServ.crearPedido(nuevo);
+    	
+    	return ResponseEntity.status(HttpStatus.CREATED).body("OK");
     }
     
     @PostMapping(path = "/{idPedido}/detalle")
