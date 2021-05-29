@@ -7,7 +7,7 @@ import dan.tp2021.pedidos.models.Pedido;
 import frsf.isi.dan.*;
 
 @Repository
-public class PedidoRepository extends InMemoryRepository<Pedido> {
+public class PedidoRepositoryOld extends InMemoryRepository<Pedido> {
 
 	@Override
 	public Integer getId(Pedido entity) {

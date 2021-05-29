@@ -19,7 +19,7 @@ import dan.tp2021.pedidos.models.DetallePedido;
 import dan.tp2021.pedidos.models.Obra;
 import dan.tp2021.pedidos.models.Pedido;
 import dan.tp2021.pedidos.models.Producto;
-import dan.tp2021.pedidos.repository.PedidoRepository;
+import dan.tp2021.pedidos.repository.PedidoRepositoryOld;
 import dan.tp2021.pedidos.service.ClienteService;
 import dan.tp2021.pedidos.service.MaterialService;
 import dan.tp2021.pedidos.service.PedidoService;
@@ -38,7 +38,7 @@ public class PedidoServiceTest {
 		ClienteService clienteService;
 		
 		@MockBean
-		PedidoRepository pedidoRepository;
+		PedidoRepositoryOld pedidoRepository;
 		
 		@Test
 		public void crearPedidoOk() {

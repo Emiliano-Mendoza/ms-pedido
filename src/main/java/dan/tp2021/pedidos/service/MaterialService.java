@@ -5,4 +5,6 @@ import dan.tp2021.pedidos.models.Producto;
 public interface MaterialService {
 	
 	public Integer stockDisponible(Producto m);
+
+	public Double getPrecioById(Integer id);
 }

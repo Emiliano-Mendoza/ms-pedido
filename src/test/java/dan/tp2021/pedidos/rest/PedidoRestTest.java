@@ -59,7 +59,6 @@ public class PedidoRestTest {
     	
     	Pedido unPedido = new Pedido();
 		unPedido.setId(1);
-		
 		Obra unaObra = new Obra();
 		unaObra.setId(1);
 		unaObra.setDescripcion("Obra test");
