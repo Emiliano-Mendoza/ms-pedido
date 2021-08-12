@@ -2,6 +2,7 @@ package dan.tp2021.pedidos;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Import;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -9,6 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import dan.tp2021.pedidos.rest.SwaggerConfiguration;
 
 @SpringBootApplication
+@EnableEurekaClient
 @Import(SwaggerConfiguration.class)
 public class DanMsPedidosApplication {
 
