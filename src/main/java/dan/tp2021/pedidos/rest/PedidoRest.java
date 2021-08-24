@@ -10,6 +10,7 @@ import org.hibernate.annotations.Parent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -25,6 +26,7 @@ import dan.tp2021.pedidos.models.Pedido;
 import dan.tp2021.pedidos.service.PedidoService;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/pedidos")
 //@Api(value = "PedidosRest", description="")
 public class PedidoRest {
@@ -52,15 +54,15 @@ public class PedidoRest {
 	}
 	
 	@GetMapping(path="/porObra/{idObra}")
-	public ResponseEntity<Pedido> getPedidoPorObra(@PathVariable Integer idObra){
+	public ResponseEntity<List<Pedido>> getPedidoPorObra(@PathVariable Integer idObra){
 		/*Optional<Pedido> pedidos = listaPedidos
 				.stream()
 				.filter(p -> p.getObra().getId().equals(idObra))
 				.findFirst();*/
-		Pedido pedido = pedidoSrv.getByObra(idObra);
+		List<Pedido> pedidos = pedidoSrv.getPorObra(idObra);
 		
-		if(pedido.getId() != null) {
-			return ResponseEntity.ok(pedido);
+		if(!pedidos.isEmpty()) {
+			return ResponseEntity.ok(pedidos);
 		}
 		else {
 			return ResponseEntity.notFound().build();

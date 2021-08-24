@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 public class Pedido {
 	@Id
@@ -19,6 +21,7 @@ public class Pedido {
 	private Integer id;
 	private Date fechaPedido;
 	@OneToMany(mappedBy = "pedido")
+	@JsonManagedReference
 	private List<DetallePedido> detallepedido;
 	@OneToOne
 	@JoinColumn(name = "estadopedido_id")

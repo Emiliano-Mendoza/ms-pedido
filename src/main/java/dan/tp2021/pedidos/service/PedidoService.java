@@ -1,5 +1,8 @@
 package dan.tp2021.pedidos.service;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.http.ResponseEntity;
 
 import dan.tp2021.pedidos.models.DetallePedido;
@@ -26,6 +29,8 @@ public interface PedidoService {
 	public ResponseEntity<String> cancelarPedido(Pedido unPedido);
 
 	public Pedido getByObra(Integer idObra);
+	
+	public List<Pedido> getPorObra(Integer idObra);
 
 	public Pedido getByEstado(String estado);
 

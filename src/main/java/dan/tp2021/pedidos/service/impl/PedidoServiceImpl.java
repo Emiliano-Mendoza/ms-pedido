@@ -2,7 +2,9 @@ package dan.tp2021.pedidos.service.impl;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.OptionalInt;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import javax.transaction.Transactional;
@@ -250,5 +252,14 @@ public class PedidoServiceImpl implements PedidoService{
 		Double precioProducto = materialService.getPrecioById(detalle.getProducto().getId());
 		detalle.setPrecio(detalle.getCantidad() * precioProducto);
 		return detalle;
+	}
+
+	@Override
+	public List<Pedido> getPorObra(Integer idObra) {
+		List<Pedido> pedidos = pedidoRepository.findAll()
+				.stream()
+				.filter(pe -> pe.getObra().getId().equals(idObra)).collect(Collectors.toList())
+				;
+		return pedidos;
 	}
 }

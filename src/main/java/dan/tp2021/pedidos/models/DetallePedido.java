@@ -8,6 +8,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 public class DetallePedido {
 	@Id
@@ -20,8 +22,9 @@ public class DetallePedido {
 	private Producto producto;
 	@ManyToOne
 	@JoinColumn(name="pedido_id")
+	@JsonBackReference
 	private Pedido pedido;
-	
+	 
 	public Integer getId() {
 		return id;
 	}
